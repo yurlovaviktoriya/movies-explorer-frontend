@@ -1,0 +1,4 @@
+.card-list {
+  width: calc(100% - 140px);
+  padding: 30px 70px 0;
+}

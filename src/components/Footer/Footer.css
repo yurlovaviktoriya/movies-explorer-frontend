@@ -32,6 +32,10 @@
   align-items: center;
 }
 
+.footer__copyright {
+  margin: 0;
+}
+
 .footer__nav {
   margin: 0;
 
