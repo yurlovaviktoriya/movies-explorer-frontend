@@ -7,7 +7,6 @@
 
 .link {
   text-decoration: none;
-  color: #000;
   white-space: nowrap;
   transition: opacity .2s linear;
 }

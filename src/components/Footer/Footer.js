@@ -10,13 +10,13 @@ function Footer() {
        <p className="footer__copyright">&copy; 2022</p>
        <ul className="list footer__nav">
          <li className="footer__nav-item">
-           <a className="link" href="https://practicum.yandex.ru/" target="_blank" rel="noreferrer">Яндекс.Практикум</a>
+           <a className="link footer__link" href="https://practicum.yandex.ru/" target="_blank" rel="noreferrer">Яндекс.Практикум</a>
          </li>
          <li className="footer__nav-item">
-           <a className="link"href="https://github.com/yurlovaviktoriya" target="_blank" rel="noreferrer">Github</a>
+           <a className="link footer__link" href="https://github.com/yurlovaviktoriya" target="_blank" rel="noreferrer">Github</a>
          </li>
          <li className="footer__nav-item">
-           <a className="link"href="https://vk.com/v.a.yurlova" target="_blank" rel="noreferrer">VK</a>
+           <a className="link footer__link" href="https://vk.com/v.a.yurlova" target="_blank" rel="noreferrer">VK</a>
          </li>
        </ul>
       </div>
