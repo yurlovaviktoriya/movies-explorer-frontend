@@ -6,12 +6,21 @@ import Footer from '../Footer/Footer';
 
 import './Movies.css';
 
-function Movies() {
+import { initialMovies } from '../../initialMovies';
+
+function Movies({ isDarkTheme, isLogged, openBurgerMenu }) {
   return (
     <>
-      <Header/>
+      <Header
+        isDarkTheme={isDarkTheme}
+        isLogged={isLogged}
+        openBurgerMenu={openBurgerMenu}
+      />
       <SearchForm/>
-      <MoviesCardList/>
+      <MoviesCardList
+        isSaved={false}
+        movies={initialMovies}
+      />
       <More/>
       <Footer/>
     </>

@@ -1,27 +1,20 @@
 import './MoviesCard.css';
-import moviePath from '../../images/33words-about-design.jpg';
 
-function MoviesCard() {
+function MoviesCard({ isSaved, name, duration, isLiked, image}) {
+
+  const btnClasses = isSaved ? "btn card__btn card__btn_type_delete"
+    : isLiked ? "btn card__btn card__btn_type_dislike" : "btn card__btn card__btn_type_like";
+
   return (
-    <>
     <article className="card">
       <div className="card__info">
-        <h2 className="card__title">33 слова о дизайне</h2>
-        <p className="card__duration">1ч 42м</p>
-        <button className="card__like-btn card__like-btn_active"></button>
+        <h2 className="card__title">{name}</h2>
+        <p className="card__duration">{duration}</p>
+        <button className={btnClasses}></button>
       </div>
-      <img className="card__img" src={moviePath} alt="Постер фильма"></img>
+      <img className="card__img" src={image} alt="Постер фильма"></img>
     </article>
-    <article className="card">
-      <div className="card__info">
-        <h2 className="card__title">33 слова о дизайне</h2>
-        <p className="card__duration">1ч 42м</p>
-        <button className="card__like-btn"></button>
-      </div>
-      <img className="card__img" src={moviePath} alt="Постер фильма"></img>
-    </article>
-    </>
   );
-}
+};
 
 export default MoviesCard;

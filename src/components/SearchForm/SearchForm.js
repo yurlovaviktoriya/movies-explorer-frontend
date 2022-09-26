@@ -1,4 +1,4 @@
-import FilterCheckbox from '../FilterCheckbox/FilterCheckbox'
+import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 
 import './SearchForm.css';
 
@@ -7,7 +7,7 @@ function SearchForm() {
     <section className="search">
       <form className="search__form">
         <input className="search__input" type="text" placeholder="Фильм"></input>
-        <button className="search__film-btn" type="submit">Поиск</button>
+        <button className="btn search__film-btn" type="submit">Поиск</button>
         <FilterCheckbox/>
       </form>
     </section>

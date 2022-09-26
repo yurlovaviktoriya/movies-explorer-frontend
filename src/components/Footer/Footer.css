@@ -4,8 +4,6 @@
 
   background-color: #fafafa;
 
-  font-family: Inter, Arial, sans-serif;
-  font-style: normal;
   font-weight: 400;
   font-size: 13px;
   line-height: 16px;
@@ -52,6 +50,47 @@
   margin-right: 0;
 }
 
-.footer__link {
-  color: #000;
+
+@media screen and (max-width: 1023px) {
+  .footer {
+    width: calc(100% - 60px);
+    padding-left: 35px;
+    padding-right: 25px;
+  }
+}
+
+
+@media screen and (max-width: 680px) {
+  .footer {
+    width: calc(100% - 20px);
+    padding: 59px 10px 10px;
+
+    font-size: 12px;
+    line-height: 15px;
+    background-color: #fff;
+  }
+
+  .footer__info {
+    padding-top: 30px;
+
+    flex-direction: column;
+
+  }
+
+  .footer__nav {
+    flex-direction: column;
+    order: -1;
+
+  }
+
+  .footer__nav-item {
+    margin-right: 0;
+    margin-bottom: 12px;
+  }
+
+  .footer__copyright {
+    margin-top: 18px;
+
+    color: #a0a0a0;
+  }
 }

@@ -1,10 +1,15 @@
+import { Link } from 'react-router-dom';
+
 import './Logo.css';
 
-function Logo() {
+function Logo({ isAuth }) {
+
+  const logoClasses = isAuth ? "logo logo_type_auth" : "logo";
+
   return (
-    <a className="link" href="/">
-      <div className="logo"></div>
-    </a>
+    <Link to="/" className="link">
+      <div className={logoClasses}></div>
+    </Link>
   );
 }
 

@@ -1,25 +1,27 @@
-import Logo from '../Logo/Logo'
-import './Login.css';
+import Logo from '../Logo/Logo';
+import "./Login.css";
 
 function Login() {
   return (
-    <div className='register'>
-        <Logo/>
-        <h2 className='register__title'>Рады видеть!</h2>
-        <form className='register__form'>
-          <label className='register__label'>
+    <div className="register">
+        <Logo
+          isAuth={true}
+        />
+        <h2 className="register__title">Рады видеть!</h2>
+        <form className="register__form">
+          <label className="register__label">
             E-mail
-            <input className='register__input' type='text'></input>
+            <input className="register__input" type="text"></input>
           </label>
-          <label className='register__label'>
+          <label className="register__label">
             Пароль
-            <input className='register__input' type='password'></input>
+            <input className="register__input" type="password"></input>
           </label>
-          <button className='register__btn' type='submit'>Войти</button>
+          <button className="btn register__btn register__btn_type_login" type="submit">Войти</button>
         </form>
-        <p className='register__text'>Ещё не зарегистрированы?<a className='link register__link' href='/signup'> Регистрация</a></p>
+        <p className="register__text">Ещё не зарегистрированы?<a className="link link_color_green" href="/signup"> Регистрация</a></p>
     </div>
   );
-}
+};
 
 export default Login;
