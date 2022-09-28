@@ -8,12 +8,12 @@ function BurgerMenu({ burgerMenuClasses, closeBurgerMenu }) {
 
   return (
     <div className={burgerMenuClasses}>
-      <div className="burger-menu__smth">
-        <button className="burger-menu__close-btn" type="button" onClick={closeBurgerMenu}></button>
+      <div className="burger-menu__window">
+        <button className="btn burger-menu__close-btn" type="button" onClick={closeBurgerMenu}></button>
         <nav className="burger-menu__nav">
           <ul className="list burger-menu__list">
             <li className="burger-menu__list-item">
-              <NavLink to="/" className={({isActive}) => (isActive ? "link link_color_black burger-menu__link_active"
+              <NavLink end to="/" className={({isActive}) => (isActive ? "link link_color_black burger-menu__link_active"
               : "link link_color_black")} onClick={closeBurgerMenu}>Главная</NavLink>
             </li>
             <li className="burger-menu__list-item burger-menu__list-item_active">

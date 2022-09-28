@@ -1,7 +1,7 @@
 import Logo from '../Logo/Logo';
 import Navigation from '../Navigation/Navigation';
 import Account from '../Account/Account';
-import AuthGroup from '../AuthGroup/AuthGroup';
+import HeaderAuthGroup from '../HeaderAuthGroup/HeaderAuthGroup';
 import './Header.css';
 
 function Header({ isDarkTheme, isLogged, openBurgerMenu }) {
@@ -12,7 +12,7 @@ function Header({ isDarkTheme, isLogged, openBurgerMenu }) {
     return (
       <header className={headerClasses}>
         <Logo/>
-        <AuthGroup/>
+        <HeaderAuthGroup/>
       </header>
     );
   }

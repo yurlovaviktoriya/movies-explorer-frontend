@@ -20,11 +20,13 @@ function SavedMovies({ isDarkTheme, isLogged, openBurgerMenu }) {
         isLogged={isLogged}
         openBurgerMenu={openBurgerMenu}
       />
-      <SearchForm/>
-      <MoviesCardList
-        isSaved={true}
-        movies={savedMovies}
-      />
+      <main>
+        <SearchForm/>
+        <MoviesCardList
+          isSaved={true}
+          movies={savedMovies}
+        />
+      </main>
       <Footer/>
     </>
   );

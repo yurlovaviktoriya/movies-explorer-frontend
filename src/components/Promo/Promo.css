@@ -12,7 +12,7 @@
 }
 
 .promo__title {
-  max-width: 640px;
+  max-width: 57%;
 
   margin: 0;
 
@@ -60,7 +60,7 @@
   border-color: rgba(255, 255, 255, 1);
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 850px) {
   .promo {
     width: calc(100% - 88px);
     min-height: 292px;

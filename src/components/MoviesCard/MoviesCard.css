@@ -4,6 +4,7 @@
 
   display: flex;
   justify-content: space-between;
+  align-items: center;
 
   background-color: #f9f9f9;
 }
@@ -14,7 +15,6 @@
 
 .card__title {
   margin: 0;
-
 
   font-weight: 500;
   font-size: 18px;
@@ -62,8 +62,7 @@
   display: block;
 }
 
-
-@media screen and (max-width: 680px) {
+@media screen and (max-width: 380px) {
   .card {
     margin-top: 20px;
     flex-direction: column;
@@ -94,7 +93,7 @@
     order: 1;
   }
 
-  .card__like-btn {
+  .card__btn {
     order: 2;
     margin: 0 16px 0 0;
   }

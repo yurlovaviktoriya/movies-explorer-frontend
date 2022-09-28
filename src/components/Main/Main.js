@@ -14,10 +14,12 @@ function Main({ isDarkTheme, isLogged, openBurgerMenu }) {
         isLogged={isLogged}
         openBurgerMenu={openBurgerMenu}
       />
-      <Promo/>
-      <AboutProject/>
-      <Techs/>
-      <AboutMe/>
+      <main>
+        <Promo/>
+        <AboutProject/>
+        <Techs/>
+        <AboutMe/>
+      </main>
       <Footer/>
     </>
   );

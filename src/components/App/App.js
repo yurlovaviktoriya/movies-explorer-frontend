@@ -50,7 +50,11 @@ function App() {
             openBurgerMenu={openBurgerMenu}
           />
         } />
-        <Route path='/profile' element={<Profile/>} />
+        <Route path='/profile' element={
+          <Profile
+            openBurgerMenu={openBurgerMenu}
+          />
+        } />
         <Route path='*' element={<ErrorPage/>} />
       </Routes>
       <BurgerMenu
