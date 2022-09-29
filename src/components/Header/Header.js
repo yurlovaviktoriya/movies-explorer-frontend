@@ -1,10 +1,17 @@
+import { useContext } from 'react';
+
 import Logo from '../Logo/Logo';
 import Navigation from '../Navigation/Navigation';
 import Account from '../Account/Account';
 import HeaderAuthGroup from '../HeaderAuthGroup/HeaderAuthGroup';
+
 import './Header.css';
 
-function Header({ isDarkTheme, isLogged, openBurgerMenu }) {
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+
+function Header({ isDarkTheme, openBurgerMenu }) {
+
+  const { isLogged } = useContext(CurrentUserContext);
 
   const headerClasses = isDarkTheme ? "header header_dark-theme" : "header";
 

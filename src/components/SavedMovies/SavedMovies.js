@@ -7,7 +7,7 @@ import './SavedMovies.css';
 
 import { initialMovies } from '../../initialMovies';
 
-function SavedMovies({ isDarkTheme, isLogged, openBurgerMenu }) {
+function SavedMovies({ isDarkTheme, openBurgerMenu }) {
 
   const savedMovies = initialMovies.filter(function(item) {
     return item.isLiked === true;
@@ -17,7 +17,6 @@ function SavedMovies({ isDarkTheme, isLogged, openBurgerMenu }) {
     <>
       <Header
         isDarkTheme={isDarkTheme}
-        isLogged={isLogged}
         openBurgerMenu={openBurgerMenu}
       />
       <main>

@@ -8,12 +8,11 @@ import './Movies.css';
 
 import { initialMovies } from '../../initialMovies';
 
-function Movies({ isDarkTheme, isLogged, openBurgerMenu }) {
+function Movies({ isDarkTheme, openBurgerMenu }) {
   return (
     <>
       <Header
         isDarkTheme={isDarkTheme}
-        isLogged={isLogged}
         openBurgerMenu={openBurgerMenu}
       />
       <main>

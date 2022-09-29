@@ -7,7 +7,6 @@ function Profile({ openBurgerMenu }) {
     <>
       <Header
         isDarkTheme={false}
-        isLogged={true}
         openBurgerMenu={openBurgerMenu}
       />
       <main className="profile">
