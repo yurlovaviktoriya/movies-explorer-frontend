@@ -1,0 +1,41 @@
+.header__auth {
+  display: flex;
+  align-items: center;
+}
+
+.header__auth-link {
+  margin-right: 2.5em;
+
+  font-weight: 500;
+  font-size: .75rem;
+  line-height: 1.333em;
+}
+
+.header__auth-btn {
+  width: 6.333em;
+  height: 2.667em;
+
+  background-color: #2be080;
+  border-radius: .25em;
+
+  font-weight: 500;
+  font-size: .75rem;
+  line-height: 1.333em;
+  color: #000;
+
+}
+
+@media screen and (max-width: 680px) {
+  .header__auth-link {
+    margin-right: 14px;
+    font-size: 10px;
+    line-height: 16px;
+  }
+
+  .header__auth-btn {
+    width: 54px;
+    height: 26px;
+    font-size: 10px;
+    line-height: 16px;
+  }
+}

@@ -1,0 +1,43 @@
+.account {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  font-weight: 500;
+  font-size: .875rem;
+  line-height: 1.143em;
+}
+
+.account__text {
+  margin: 0 1.426em 0 0;
+  transition: opacity .2s linear;
+}
+
+.account__text:hover {
+  cursor: pointer;
+  opacity: .5;
+}
+
+.account__icon {
+  width: .649em;
+  height: .667em;
+  margin-right: .599em;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.account__icon_type_light-theme {
+  background-image: url('../../images/account-icon.svg');
+}
+
+
+.account__icon_type_dark-theme {
+  background-image: url('../../images/account-icon-white.svg');
+}
+
+@media screen and (max-width: 768px) {
+  .header__account {
+    display: none;
+  }
+}
