@@ -2,13 +2,31 @@ import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 
 import './SearchForm.css';
 
-function SearchForm() {
+// import InputValidator from '../../utils/InputValidator';
+
+function SearchForm({ onHandleSubmit, inputValue, setInputValue, isCheckedShortMovies, setIsCheckedShortMovies }) {
+
+  const changeInputValue = (evt) => {
+    setInputValue(evt.target.value);
+  };
+
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+
+    localStorage.setItem('requestText', JSON.stringify(inputValue));
+
+    onHandleSubmit();
+  };
+
   return (
     <section className="search">
-      <form className="search__form">
-        <input className="search__input" type="text" placeholder="Фильм" required></input>
+      <form className="search__form" onSubmit={handleSubmit}>
+        <input className="search__input" type="text" placeholder="Фильм" required onChange={changeInputValue} value={inputValue || ''}></input>
         <button className="btn search__film-btn" type="submit">Поиск</button>
-        <FilterCheckbox/>
+        <FilterCheckbox
+          isChecked={isCheckedShortMovies}
+          setIsChecked={setIsCheckedShortMovies}
+        />
       </form>
     </section>
   );

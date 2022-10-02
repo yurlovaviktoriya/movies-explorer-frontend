@@ -5,13 +5,11 @@ import Footer from '../Footer/Footer';
 
 import './SavedMovies.css';
 
-import { initialMovies } from '../../initialMovies';
-
 function SavedMovies({ isDarkTheme, openBurgerMenu }) {
 
-  const savedMovies = initialMovies.filter(function(item) {
-    return item.isLiked === true;
-  });
+  // const savedMovies = initialMovies.filter(function(item) {
+  //   return item.isLiked === true;
+  // });
 
   return (
     <>
@@ -23,7 +21,7 @@ function SavedMovies({ isDarkTheme, openBurgerMenu }) {
         <SearchForm/>
         <MoviesCardList
           isSaved={true}
-          movies={savedMovies}
+          // movies={savedMovies}
         />
       </main>
       <Footer/>

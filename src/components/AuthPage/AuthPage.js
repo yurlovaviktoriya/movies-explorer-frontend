@@ -5,7 +5,7 @@ import AuthForm from '../AuthForm/AuthForm';
 
 import './AuthPage.css';
 
-function AuthPage({ title, text, textLink, link, formData, inputData }) {
+function AuthPage({ title, text, textLink, link, formData, inputData, onChangeInputText, onChangeInputError, onSubmit }) {
   return (
     <main className="auth">
         <Logo
@@ -16,6 +16,9 @@ function AuthPage({ title, text, textLink, link, formData, inputData }) {
           submitBtnText={formData.submitBtnText}
           submitBtnClasses={formData.submitBtnClasses}
           inputs={inputData}
+          onChangeInputText={onChangeInputText}
+          onChangeInputError={onChangeInputError}
+          onSubmit={onSubmit}
         />
         <p className="auth__text">{text}<Link to={link} className="link link_color_green"> {textLink}</Link></p>
     </main>

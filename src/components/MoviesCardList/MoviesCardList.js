@@ -9,10 +9,10 @@ function MoviesCardList({ isSaved, movies }) {
       {movies.map((card) => (
           <MoviesCard
             key={card.id}
-            name={card.nameRu}
+            name={card.nameRU}
             duration={card.duration}
             isLiked={card.isLiked}
-            image={card.image}
+            image={`https://api.nomoreparties.co${card.image.url}`}
             isSaved={isSaved}
           />
         ))}

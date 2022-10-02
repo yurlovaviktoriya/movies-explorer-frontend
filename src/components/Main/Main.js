@@ -11,7 +11,6 @@ function Main({ isDarkTheme, openBurgerMenu }) {
     <>
       <Header
         isDarkTheme={isDarkTheme}
-        // isLogged={isLogged}
         openBurgerMenu={openBurgerMenu}
       />
       <main>

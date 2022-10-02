@@ -18,9 +18,11 @@ import ProtectedRoute from '../ProtectedRoute';
 function App() {
 
   const [currentUser, setCurrentUser] = useState({name: '', email: '', _id: ''});
-  const [isLogged, setIsLogged] = useState(false);
+  const [isLogged, setIsLogged] = useState(true);
 
   const [burgerMenuClasses, setBurgerMenuClasses] = useState('burger-menu');
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const openBurgerMenu = () => {
     setBurgerMenuClasses('burger-menu burger-menu_opened');
@@ -30,12 +32,66 @@ function App() {
     setBurgerMenuClasses('burger-menu');
   }
 
+  function handleRegisterSubmit({ name, email, password }) {
+    setIsLoading(true);
+
+    // auth.register(email, password)
+    //   .then((res) => {
+    //     setIsInfoToolTipOpen(true);
+    //     setIsRegisterSuccess(true);
+    //     history.push('/sign-in');
+    //   })
+    //   .catch(err => {
+    //     setIsInfoToolTipOpen(true);
+    //     setIsRegisterSuccess(false);
+    //     console.log(err);
+    //   })
+    //   .finally(() => {
+    //     setIsLoading(false);
+    //   })
+    console.log('Запрос к АПИ. Регистрация!!!');
+    console.log(name, email, password);
+    setIsLoading(false);
+  }
+
+
+  function handleLoginSubmit({ email, password }) {
+    setIsLoading(true);
+
+    // auth.login(email, password)
+    //   .then((data) => {
+    //     setLoggedIn(true);
+    //     history.push('/');
+    //   })
+    //   .catch(err => {
+    //     setIsInfoToolTipOpen(true);
+    //     setIsRegisterSuccess(false);
+    //     console.log(err);
+    //   })
+    //   .finally(() => {
+    //     setIsLoading(false);
+    //   })
+    console.log('Запрос к АПИ. Авторизация!!!');
+    console.log(email, password);
+    setIsLoading(false);
+  };
+
   return (
     <CurrentUserContext.Provider value={{currentUser, isLogged}}>
       <div className="root">
         <Routes>
-          <Route path='/signup' element={<Register/>} />
-          <Route path='/signin' element={<Login/>} />
+          <Route path='/signup' element={
+            <Register
+              isLoading={isLoading}
+              onRegister={handleRegisterSubmit}
+            />
+          } />
+          <Route path='/signin' element={
+            <Login
+              isLoading={isLoading}
+              onLogin={handleLoginSubmit}
+            />
+          } />
           <Route path='/' element={
             <Main
               isDarkTheme={true}
