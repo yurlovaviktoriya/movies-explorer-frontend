@@ -27,6 +27,7 @@ function BurgerMenu({ burgerMenuClasses, closeBurgerMenu }) {
           </ul>
           <Account
             isHeader={false}
+            closeBurgerMenu={closeBurgerMenu}
           />
         </nav>
       </div>

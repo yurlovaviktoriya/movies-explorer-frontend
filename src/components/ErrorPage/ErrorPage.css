@@ -20,13 +20,15 @@
   font-size: 16px;
   line-height: 19px;
   text-align: center;
-  color: #000000;
+  color: #000;
 }
 
-.page-error__link {
+.page-error__btn {
   display: block;
-  margin-top: 184px;
-  text-align: center;
+  margin: 184px auto 0;
+
+  background: transparent;
+  color: #2be080;
 }
 
 @media screen and (max-width: 768px) {
@@ -54,7 +56,7 @@
     line-height: 15px;
   }
 
-  .page-error__link {
+  .page-error__btn {
     margin-top: 284px;
 
     font-weight: 400;

@@ -1,62 +1,81 @@
-import { useState, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 
 import Header from '../Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
+import Preloader from '../Preloader/Preloader';
+import SearchResponseBlock from '../SearchResponseBlock/SearchResponseBlock';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import More from '../More/More';
 import Footer from '../Footer/Footer';
 
 import './Movies.css';
 
-import { getMovies } from '../../utils/MoviesApi';
-import { filterMovies } from '../../utils/filterMovies';
+import useMoviesFilter from '../../utils/useMoviesFilter';
+import { useHeightCalculatorForMoviesList } from '../../utils/useHeightCalculatorForMoviesList'
+import { getDataFromLocalStorage } from '../../utils/moveLocalStorageDataFunctions';
 
-function Movies({ isDarkTheme, openBurgerMenu }) {
+function Movies({ isDarkTheme, openBurgerMenu, isLoading, onHandleSearchApiMovies,
+                  onHandleSaveMovie, onHandleDeleteMovie, allMoviesRequestData,
+                  setAllMoviesRequestData, searchResponse, setSearchResponse}) {
 
-    // localStorage.clear();
+  const { searchQueryForAllMovies, isShortMoviesForAllMovies } = allMoviesRequestData;
+  
+  const moreBtn = useRef();
+  const moviesListElement = useRef();
+  
+  const { moviesListHeight, areThereAnyMovies, setDataForCalculation,
+           resetSettingsForCalculation, calculateHeight } = useHeightCalculatorForMoviesList();
 
-  const isShortMovies = JSON.parse(localStorage.getItem('isShortMovies'));
-  const [initialMovies, setInitialMovies] = useState([]);
-  const [requestText, setRequestText] = useState(JSON.parse(localStorage.getItem('requestText')));
-  const [isCheckedShortMovies, setIsCheckedShortMovies] = useState(isShortMovies === null ? false : isShortMovies);
+  const { filteredMovies, notFoundMovies, enableFiltration } = useMoviesFilter({
+        searchQueryKey: 'searchQueryForAllMovies',
+        isShortMoviesKey: 'isShortMoviesForAllMovies'
+      }, 'foundAmongAllMovies');
+  
+  const moviesToSearch = getDataFromLocalStorage('apiMovies') || [];
+  const moviesToRender = getDataFromLocalStorage('foundAmongAllMovies') || [];
 
+  const isDesktopAtMountingTime = document.body.clientWidth > 380;
+
+  const monitorScreenWidth = () => {
+    const screenWidth = document.body.clientWidth;
+    const isCurrentDesktop = screenWidth > 380;
+    if (isDesktopAtMountingTime !== isCurrentDesktop) {
+      const params = {isCurrentDesktop, isCurrentMobail: !isCurrentDesktop}
+      setTimeout(() => {resetSettingsForCalculation(params)}, 300);
+    };
+  };
 
   useEffect(() => {
-    setInitialMovies(filterMovies())
-  }, [isCheckedShortMovies]);
+    window.addEventListener('resize', monitorScreenWidth);
+    return () => {
+      window.removeEventListener('resize', monitorScreenWidth);
+    };
+  }, []);
 
+  useEffect(() => {
+    setDataForCalculation(document.body.clientWidth, moviesToRender.length);
+    calculateHeight();
+  },[filteredMovies]);
+
+  
+  const enableFiltrationAmongAllMovies = () => {
+    enableFiltration(moviesToSearch);
+  };
 
   const handleSubmit = () => {
-    getMovies()
-      .then((movies) => {
-         localStorage.setItem('movies', JSON.stringify(movies));
-         setInitialMovies(filterMovies());
-      }).catch((err) => {
-        console.log(err)
-      });
+    if (moviesToSearch.length === 0) {
+      setSearchResponse('');
+      onHandleSearchApiMovies(enableFiltration);
+    } else {
+       enableFiltration(moviesToSearch);
+    };
   };
+    
 
+  const handleMoreBtnClick = () => {
+    calculateHeight();
+  }
 
-  if (!initialMovies) {
-    return (
-      <>
-        <Header
-          isDarkTheme={isDarkTheme}
-          openBurgerMenu={openBurgerMenu}
-        />
-        <main>
-          <SearchForm
-            onHandleSubmit={handleSubmit}
-            inputValue={requestText}
-            setInputValue={setRequestText}
-            isCheckedShortMovies={isCheckedShortMovies}
-            setIsCheckedShortMovies={setIsCheckedShortMovies}
-          />
-        </main>
-        <Footer/>
-      </>
-    );
-  };
   return (
     <>
       <Header
@@ -65,17 +84,38 @@ function Movies({ isDarkTheme, openBurgerMenu }) {
       />
       <main>
         <SearchForm
+          requestText={{
+            localStorageName: 'searchQueryForAllMovies',
+            localStorageValue: searchQueryForAllMovies
+          }}
+          isShortMovies={{
+            localStorageName: 'isShortMoviesForAllMovies',
+            localStorageValue: isShortMoviesForAllMovies  
+          }}
+          setMoviesRequestData={setAllMoviesRequestData}
           onHandleSubmit={handleSubmit}
-          inputValue={requestText}
-          setInputValue={setRequestText}
-          isCheckedShortMovies={isCheckedShortMovies}
-          setIsCheckedShortMovies={setIsCheckedShortMovies}
+        />
+        <Preloader
+          isLoading={isLoading}
+        />
+        <SearchResponseBlock
+          message={searchResponse || notFoundMovies}
         />
         <MoviesCardList
+          moviesListElement={moviesListElement}
+          moviesListHeight={moviesListHeight}
           isSaved={false}
-          movies={initialMovies}
+          moviesToRender={moviesToRender}
+          isChecked={isShortMoviesForAllMovies}
+          enableFiltration={enableFiltrationAmongAllMovies}
+          onHandleSaveMovie={onHandleSaveMovie}
+          onHandleDeleteMovie={onHandleDeleteMovie}
         />
-        <More/>
+        <More
+          moreBtn={moreBtn}
+          onHandleClick={handleMoreBtnClick}
+          areThereAnyMovies={areThereAnyMovies}
+        />
       </main>
       <Footer/>
     </>

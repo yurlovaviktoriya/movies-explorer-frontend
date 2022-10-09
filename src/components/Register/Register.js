@@ -1,49 +1,24 @@
-import {useState} from 'react';
+import { useEffect, useState } from 'react';
 
 import AuthPage from '../AuthPage/AuthPage';
 
 import './Register.css';
 
-function Register({ isLoading, onRegister }) {
+import { useFormWithValidation } from '../../utils/useFormWithValidation';
+
+function Register({ isLoading, onRegister, serverMessage, setServerMessage }) {
+
+  const { values, handleChange, errors, isValid } = useFormWithValidation();
 
   const submitBtnText = isLoading ? 'Регистрация...' : 'Зарегистрироваться';
 
-  const [userRegisterInfo, setUserRegisterInfo] = useState({
-    registerName: '',
-    registerEmail: '',
-    registerPassword: ''
-  });
-
-  const [inputErrors, setInputErrors] = useState({
-    registerName: false,
-    registerEmail: false,
-    registerPassword: false
-  });
-
-  const handleChangeInputText = (evt) => {
-    setUserRegisterInfo(state => ({...state, [evt.target.name] : evt.target.value}));
-  };
-
-  const changeInputErrorState = (inputName, isError) => {
-    setInputErrors((state) => ({...state, [inputName] : isError}));
-  };
-
-  const handleChangeInputError = (evt, isInvalidInput) => {
-    if (isInvalidInput) {
-      changeInputErrorState(evt.target.name, true);
-    } else {
-      changeInputErrorState(evt.target.name, false);
-    }
-   return Object.values(inputErrors).every(item => item === false);
-  };
-
   const handleSubmit = (evt) => {
     evt.preventDefault();
-
+    
     onRegister({
-      name: userRegisterInfo.registerName,
-      email: userRegisterInfo.registerEmail,
-      password: userRegisterInfo.registerPassword
+      name: values.registerName,
+      email: values.registerEmail,
+      password: values.registerPassword
     });
   };
 
@@ -66,7 +41,6 @@ function Register({ isLoading, onRegister }) {
             labelText: 'Имя',
             inputType: 'text',
             inputName: 'registerName',
-            inputValue: userRegisterInfo.registerName,
             minLength: '2',
             maxLength: '30'
           },
@@ -74,21 +48,23 @@ function Register({ isLoading, onRegister }) {
             id: 2,
             labelText: 'E-mail',
             inputType: 'email',
-            inputName: 'registerEmail',
-            inputValue: userRegisterInfo.registerEmail
+            inputName: 'registerEmail'
           },
           {
             id: 3,
             labelText: 'Пароль',
-            inputType: 'current-password',
-            inputName: 'registerPassword',
-            inputValue: userRegisterInfo.registerPassword
+            inputType: 'password',
+            inputName: 'registerPassword'
           },
         ]
       }
-      onChangeInputText={handleChangeInputText}
-      onChangeInputError={handleChangeInputError}
+      onChangeInputText={handleChange}
       onSubmit={handleSubmit}
+      serverMessage={serverMessage}
+      setServerMessage={setServerMessage}
+      inputValues={values}
+      errorsMessage={errors}
+      isValidForm={isValid}
     />
   )
 };

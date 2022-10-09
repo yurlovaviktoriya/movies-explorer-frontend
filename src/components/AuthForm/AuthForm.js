@@ -1,42 +1,42 @@
-import { useState } from 'react';
+import {useState, useRef, useEffect} from 'react';
 
 import AuthInput from '../AuthInput/AuthInput';
 
 import './AuthForm.css';
 
-function AuthForm({ submitBtnText, submitBtnClasses, inputs, onChangeInputText, onChangeInputError, onSubmit }) {
+import { getDataFromLocalStorage, setDataToLocalStorage } from '../../utils/moveLocalStorageDataFunctions';
 
-    const [btnActive, setBtnActive] = useState(false);
+function AuthForm({ isValidForm, inputValues, errorsMessage, submitBtnText, submitBtnClasses, inputs,
+                    onChangeInputText, onSubmit, serverMessage, setServerMessage }) {
 
-    const formBtnClasses = btnActive ? submitBtnClasses : `${submitBtnClasses} auth__btn_disabled`;
-
-    const toggleButtonState = (evt, hasInvalidInput) => {
-      const isError = !onChangeInputError(evt, hasInvalidInput);
-      if (isError) {
-        console.log('OFF');
-        setBtnActive(false);
-      } else {
-        console.log('ON');
-        setBtnActive(true);
-      }
-    };
-
+  const btnSubmit = useRef(); 
+  
+  const formBtnClasses = isValidForm ? submitBtnClasses : `${submitBtnClasses} auth__btn_disabled`;
+  
+  const message = getDataFromLocalStorage('serverMessage');
+  
+  useEffect(()=> {
+    setDataToLocalStorage('serverMessage', serverMessage);
+    return () => {setServerMessage('')};
+  }, [serverMessage]);
+  
     return (
       <form className="auth__form" onSubmit={onSubmit}>
-         {inputs.map((input) => (
+        {inputs.map((input) => (
           <AuthInput
             key={input.id}
             labelText={input.labelText}
             inputType={input.inputType}
             inputName={input.inputName}
-            inputValue={input.inputValue}
             minLength={input.minLength}
             maxLength={input.maxLength}
             onChangeInputText={onChangeInputText}
-            onToggleButtonState={toggleButtonState}
+            errorsMessage={errorsMessage}
+            inputValues={inputValues}
           />
         ))}
-        <button className={formBtnClasses} type="submit">{submitBtnText}</button>
+          <p className="auth__server-message">{message}</p>
+        <button ref={btnSubmit} className={formBtnClasses} type="submit" disabled={!isValidForm}>{submitBtnText}</button>
       </form>
     )
 };

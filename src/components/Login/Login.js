@@ -1,27 +1,23 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+
 import AuthPage from '../AuthPage/AuthPage';
 
 import './Login.css';
 
-function Login({ isLoading, onLogin }) {
+import { useFormWithValidation } from '../../utils/useFormWithValidation';
 
+function Login({ isLoading, onLogin, serverMessage, setServerMessage }) {
+
+  const { values, handleChange, errors, isValid } = useFormWithValidation();
+  
   const submitBtnText = isLoading ? 'Вход...' : 'Войти';
 
-  const [userLoginInfo, setUserLoginInfo] = useState({
-    loginEmail: '',
-    loginPassword: ''
-  });
-
-  const handleChangeInputText = (evt) => {
-    setUserLoginInfo(state => ({...state, [evt.target.name] : evt.target.value}));
-  };
-
-  const handleSubmit = (evt) => {
+  const handleSubmit = (evt, btnSubmit) => {
     evt.preventDefault();
 
     onLogin({
-      email: userLoginInfo.loginEmail,
-      password: userLoginInfo.loginPassword
+      email: values.loginEmail,
+      password: values.loginPassword
     });
   };
 
@@ -43,20 +39,23 @@ function Login({ isLoading, onLogin }) {
             id: 1,
             labelText: 'E-mail',
             inputType: 'email',
-            inputName: 'loginEmail',
-            inputValue: userLoginInfo.loginEmail
+            inputName: 'loginEmail'
           },
           {
             id: 2,
             labelText: 'Пароль',
-            inputType: 'current-password',
-            inputName: 'loginPassword',
-            inputValue: userLoginInfo.loginPassword
+            inputType: 'password',
+            inputName: 'loginPassword'
           },
         ]
       }
-      onChangeInputText={handleChangeInputText}
+      inputValues={values}
+      errorsMessage={errors}
+      isValidForm={isValid}
+      onChangeInputText={handleChange}
       onSubmit={handleSubmit}
+      serverMessage={serverMessage}
+      setServerMessage={setServerMessage}
     />
   )
 };

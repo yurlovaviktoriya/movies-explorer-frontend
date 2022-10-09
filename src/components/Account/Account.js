@@ -1,6 +1,8 @@
+import { Link } from 'react-router-dom';
+
 import './Account.css';
 
-function Account({ isHeader, isDarkTheme }) {
+function Account({ isHeader, isDarkTheme, closeBurgerMenu }) {
 
   const accountClasses = isHeader ? "account header__account" : "account burger-menu__account";
   const linkClasses = isDarkTheme ? "link link_color_white" : "link link_color_black";
@@ -11,7 +13,7 @@ function Account({ isHeader, isDarkTheme }) {
   return (
     <div className={accountClasses}>
       <p className="account__text">
-        <a className={linkClasses} href="/profile">Аккаунт</a>
+        <Link to="/profile" className={linkClasses} onClick={closeBurgerMenu}>Аккаунт</Link>
       </p>
       <div className={iconClasses}></div>
     </div>

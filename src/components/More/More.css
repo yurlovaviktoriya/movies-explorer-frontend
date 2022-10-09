@@ -4,7 +4,13 @@
   padding-top: 50px;
   padding-bottom: 80px;
 
+  display: none;
+
   text-align: center;
+}
+
+.more_visible {
+  display: block;
 }
 
 .more__btn {
