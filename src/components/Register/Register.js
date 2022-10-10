@@ -42,19 +42,22 @@ function Register({ isLoading, onRegister, serverMessage, setServerMessage }) {
             inputType: 'text',
             inputName: 'registerName',
             minLength: '2',
-            maxLength: '30'
+            maxLength: '30',
+            autocomplete: 'off'
           },
           {
             id: 2,
             labelText: 'E-mail',
             inputType: 'email',
-            inputName: 'registerEmail'
+            inputName: 'registerEmail',
+            autocomplete: 'off'
           },
           {
             id: 3,
             labelText: 'Пароль',
             inputType: 'password',
-            inputName: 'registerPassword'
+            inputName: 'registerPassword',
+            autocomplete: 'new-password'
           },
         ]
       }
@@ -65,6 +68,7 @@ function Register({ isLoading, onRegister, serverMessage, setServerMessage }) {
       inputValues={values}
       errorsMessage={errors}
       isValidForm={isValid}
+      isLoading={isLoading}
     />
   )
 };

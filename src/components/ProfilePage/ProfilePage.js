@@ -1,4 +1,4 @@
-import {useContext, useEffect, useRef, useState} from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import Header from '../Header/Header';
 import ProfileForm from '../ProfileForm/ProfileForm';
@@ -8,12 +8,19 @@ import './ProfilePage.css';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 import { useFormWithValidation } from '../../utils/useFormWithValidation';
+import { getDataFromLocalStorage } from '../../utils/moveLocalStorageDataFunctions';
 
-function ProfilePage({ openBurgerMenu, onHandleUpdateProfileInfo, onHandleExitClick, serverMessage, setServerMessage }) {
+function ProfilePage({ isLoading, openBurgerMenu, onHandleUpdateProfileInfo,
+                       onHandleExitClick, serverMessage, setServerMessage }) {
 
-  const { name, email } = useContext(CurrentUserContext).currentUser;
+  let { name, email } = useContext(CurrentUserContext).currentUser;
   
-  const { values, setValues, handleChange, errors, isValid, resetForm } = useFormWithValidation();
+  if (!name || !email) {
+    name = getDataFromLocalStorage('currentUser').name;
+    email = getDataFromLocalStorage('currentUser').email;
+  };
+
+  const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation({ profileName: name, profileEmail: email});
 
   const [isActualData, setIsActualData] = useState(false);
 
@@ -29,8 +36,8 @@ function ProfilePage({ openBurgerMenu, onHandleUpdateProfileInfo, onHandleExitCl
     evt.preventDefault();
 
     onHandleUpdateProfileInfo({
-      name: values.profileName || name,
-      email: values.profileEmail || email
+      name: values.profileName,
+      email: values.profileEmail
     }, setIsActualData);
   };
     
@@ -75,6 +82,7 @@ function ProfilePage({ openBurgerMenu, onHandleUpdateProfileInfo, onHandleExitCl
             inputValues={values}
             errorMessages={errors}
             isValidForm={isValid}
+            isLoading={isLoading}
           />
         <button className="btn profile__btn profile__logout-btn" type="button" onClick={handleExit}>Выйти из аккаунта</button>
       </main>

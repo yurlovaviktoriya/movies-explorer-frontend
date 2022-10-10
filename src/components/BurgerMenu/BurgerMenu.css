@@ -90,10 +90,6 @@
     margin-top: 26px;
   }
 
-  .burger-menu__link_active {
-    border-bottom: 2px solid #000;
-  }
-
   .burger-menu__account {
     width: 100px;
     margin-top: 58vh;

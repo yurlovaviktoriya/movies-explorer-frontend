@@ -13,6 +13,7 @@ function Login({ isLoading, onLogin, serverMessage, setServerMessage }) {
   const submitBtnText = isLoading ? 'Вход...' : 'Войти';
 
   const handleSubmit = (evt, btnSubmit) => {
+    
     evt.preventDefault();
 
     onLogin({
@@ -39,13 +40,15 @@ function Login({ isLoading, onLogin, serverMessage, setServerMessage }) {
             id: 1,
             labelText: 'E-mail',
             inputType: 'email',
-            inputName: 'loginEmail'
+            inputName: 'loginEmail',
+            autocomplete: 'on'
           },
           {
             id: 2,
             labelText: 'Пароль',
             inputType: 'password',
-            inputName: 'loginPassword'
+            inputName: 'loginPassword',
+            autocomplete: 'current-password'
           },
         ]
       }
@@ -56,6 +59,7 @@ function Login({ isLoading, onLogin, serverMessage, setServerMessage }) {
       onSubmit={handleSubmit}
       serverMessage={serverMessage}
       setServerMessage={setServerMessage}
+      isLoading={isLoading}
     />
   )
 };

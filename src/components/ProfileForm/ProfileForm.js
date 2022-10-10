@@ -4,13 +4,15 @@ import ProfileInput from '../ProfileInput/ProfileInput';
 
 import './ProfileForm.css';
 
-function ProfileForm({ inputValues, errorMessages, isValidForm, inputs, onChangeInputText, onSubmit,
+function ProfileForm({ isLoading, inputValues, errorMessages, isValidForm, inputs, onChangeInputText, onSubmit,
                        serverMessage, setServerMessage, isActualData }) {
     
 
   const message = JSON.parse(localStorage.getItem('serverMessage'));
 
-  const btnState = isActualData ? false : true;
+  const isDisabledBtn = !isValidForm || !isActualData || isLoading;
+  const btnClasses = isDisabledBtn ? 'btn profile__btn profile__edit-btn profile__edit-btn_disabled'
+                                   : 'btn profile__btn profile__edit-btn';
 
   useEffect(()=> {
     localStorage.setItem('serverMessage', JSON.stringify(serverMessage));
@@ -35,7 +37,7 @@ function ProfileForm({ inputValues, errorMessages, isValidForm, inputs, onChange
           />
         ))}
       <p className="profile__server-message">{message}</p>
-      <button className="btn profile__btn profile__edit-btn" type="submit" disabled={!isValidForm}>Редактировать</button>
+      <button className={btnClasses} type="submit" disabled={isDisabledBtn}>Редактировать</button>
     </form>
   );
 };

@@ -1,13 +1,15 @@
-export const failAutologinMessage = 'При автоматической авторизации сервер ответил ошибкой.' +
-            'Попробуйте войти самостоятельно.';
-export const failLoginMessage = 'Ошибка при попытке входа. Ответ сервера:';
+export const FAIL_AUTOLOGIN_MESSAGE = 'При автоматической авторизации сервер ответил ошибкой.' +
+            'Попробуйте войти самостоятельно. Статус: ';
+export const FAIL_LOGIN_MESSAGE = 'Ошибка при попытке входа. Статус:';
 
-export const successRegisterMessage = 'Вы успешно зарегистрировались.' +
+export const SUCCESS_REGISTER_MESSAGE = 'Вы успешно зарегистрировались.' +
             'Осуществляется автоматический вход на сайт, после чего вы будете перенаправлены на страницу с фильмами';
-export const failRegisterMessage = 'При регистрации сервер ответил ошибкой: ';
+export const FAIL_REGISTER_MESSAGE = 'При регистрации сервер ответил ошибкой. Статус:  ';
 
-export const successUpdateUserInfo = 'Пользовательские данные успешно изменены!';
-export const failUpdateUserInfo = 'Невозможно обновить пользовательские данные. Сервер ответил ошибкой: ';
+export const SUCCESS_UPDATE_USER_INFO = 'Пользовательские данные успешно изменены!';
+export const FAIL_UPDATE_USER_INFO = 'Невозможно обновить пользовательские данные. Сервер ответил ошибкой: ';
 
-export const failMoviesSearch = 'Во время запроса произошла ошибка. Возможно, проблема с соединением' +
+export const FAIL_MOVIES_SEARCH = 'Во время запроса произошла ошибка. Возможно, проблема с соединением' +
             'или сервер недоступен. Подождите немного и попробуйте ещё раз';
+
+export const SERVER_ERROR = 'Сервер ответил ошибкой. Статус:';

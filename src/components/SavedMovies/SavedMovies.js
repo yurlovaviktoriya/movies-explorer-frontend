@@ -54,6 +54,7 @@ function SavedMovies({ isLoading, setIsLoading, isDarkTheme, openBurgerMenu, use
       />
       <main>
         <SearchForm
+          isLoading={isLoading}
           onHandleSubmit={handleSubmit}
           requestText={{
             localStorageName: 'searchQueryForUserMovies',

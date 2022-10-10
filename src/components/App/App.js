@@ -13,8 +13,8 @@ import ProtectedRoute from '../ProtectedRoute';
 
 import './App.css';
 
-import { failAutologinMessage, failLoginMessage, successRegisterMessage, failRegisterMessage,
-        successUpdateUserInfo, failUpdateUserInfo, failMoviesSearch } from '../../constants/messagesToUser';
+import { SERVER_ERROR, FAIL_AUTOLOGIN_MESSAGE, FAIL_LOGIN_MESSAGE, SUCCESS_REGISTER_MESSAGE, FAIL_REGISTER_MESSAGE,
+        SUCCESS_UPDATE_USER_INFO, FAIL_UPDATE_USER_INFO, FAIL_MOVIES_SEARCH } from '../../constants/messagesToUser';
 
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
@@ -43,23 +43,28 @@ function App() {
 
   const [burgerMenuClasses, setBurgerMenuClasses] = useState('burger-menu');
   const [isLoading, setIsLoading] = useState(false);
-  const [cardStateSwitch, setCardStateSwitch] = useState(false); // ещё подумать!!!
 
 
   useEffect(() => {
-    if (isLogged && (location.pathname === '/signup' || location.pathname === '/signin' )) {
-      history('/')
-    };
+    const isAuthPage = location.pathname === '/signup' || location.pathname === '/signin'
 
-    getProfileInfo()
-      .then((currentUserInfo) => {
-        setCurrentUser({
-          name: currentUserInfo.name,
-          email: currentUserInfo.email
+    if (isLogged && isAuthPage) {
+      history('/');
+    } else if (isLogged && !isAuthPage) {
+      getProfileInfo()
+        .then((currentUserInfo) => {
+          setCurrentUser({
+            name: currentUserInfo.name,
+            email: currentUserInfo.email
+          });
+          setDataToLocalStorage('currentUser', {
+            name: currentUserInfo.name,
+            email: currentUserInfo.email
+          })
+        }).catch((statusCode) => {
+          checkAuthorization(statusCode);
         });
-      }).catch(err => {
-      console.log(err);
-      });
+    };
   }, []);
 
   const openBurgerMenu = () => {
@@ -82,50 +87,33 @@ function App() {
           name: currentUserInfo.name,
           email: currentUserInfo.email
         });
-      }).catch((err) => {
-        setServerMessage(`${failAutologinMessage} ${err}`)
+      }).catch((statusCode) => {
+        setServerMessage(`${FAIL_AUTOLOGIN_MESSAGE} ${statusCode}`)
       });
-  };
+  }
 
   const handleRegisterSubmit = ({ name, email, password }) => {
     setIsLoading(true);
 
     register({ name, email, password })
       .then(() => {
-        setServerMessage(successRegisterMessage);
+        setServerMessage(SUCCESS_REGISTER_MESSAGE);
         setTimeout(() => autoLogin({ email, password }), 3000);
-      }).catch((err) => {
-        setServerMessage(`${failRegisterMessage} ${err}`)
+      }).catch((statusCode) => {
+        setServerMessage(`${FAIL_REGISTER_MESSAGE} ${statusCode}`)
       }).finally(() => {
         setIsLoading(false);
       });
   };
   
-  const handleExitClick = () => {
-    logout()
-      .then(() => {
-        localStorage.clear();
-        setIsLogged(false);
-        setAllMoviesRequestData({
-         searchQueryForAllMovies: '',
-         isShortMoviesForAllMovies: false
-        });
-        setUserMoviesRequestData({
-         searchQueryForUserMovies: '',
-         isShortMoviesForUserMovies: false
-        });
-      }).catch((err) => {
-        console.log('failed logout', err);
-    });
-  };
-
   const getInitialMovies = () => {
     getSavedMovies()
       .then((savedMovies) => {
         setDataToLocalStorage('userMovies', savedMovies);
         setDataToLocalStorage('foundAmongUserMovies', savedMovies);
-      }).catch((err) => {
-        console.log(err);
+      }).catch((statusCode) => {
+        checkAuthorization(statusCode)
+        console.log(`${SERVER_ERROR} ${statusCode}`);
     });
   };
 
@@ -142,29 +130,33 @@ function App() {
         });
         getInitialMovies();
         history('/movies');
-      }).catch((err) => {
-        setServerMessage(`${failLoginMessage} ${err}`);
+      }).catch((statusCode) => {
+        setServerMessage(`${FAIL_LOGIN_MESSAGE} ${statusCode}`);
       }).finally(() => {
         setIsLoading(false);
       });
   };
   
   const handleUpdateProfileInfo = ({ name, email }, setIsActualData)=> {
+    setIsLoading(true);  
+      
     editProfileInfo({ name, email })
       .then((res) => {
         setCurrentUser({
           name: res.name,
           email: res.email
         });
-        setServerMessage(successUpdateUserInfo);
+        setServerMessage(SUCCESS_UPDATE_USER_INFO);
         setIsActualData(false);
-      }).catch((err) => {
-        setServerMessage(`${failUpdateUserInfo} ${err}`);
-      });
+      }).catch((statusCode) => {
+        checkAuthorization(statusCode);
+        setServerMessage(`${FAIL_UPDATE_USER_INFO} ${statusCode}`);
+      }).finally(() => {
+        setIsLoading(false);
+      })
   };
   
   const handleSearchApiMovies = (enableFiltration) => {
-      
     setIsLoading(true);
     
     getMovies()
@@ -173,13 +165,15 @@ function App() {
         setDataToLocalStorage('apiMovies', validMovies);
         enableFiltration(validMovies);
       }).catch(() => {
-        setSearchResponse(failMoviesSearch);
+        setSearchResponse(FAIL_MOVIES_SEARCH);
       }).finally(() => {
         setIsLoading(false); 
     });
   };
 
   const handleSaveMovie = (id) => {
+    setIsLoading(true);
+    
     const movie = getDataFromLocalStorage('apiMovies').find(m => m.id === id);
 
     saveMovie(movie)
@@ -188,33 +182,60 @@ function App() {
         setDataToLocalStorage('userMovies', [...userMovies, savedMovie]);
         const foundAmongUserMovies = getDataFromLocalStorage('foundAmongUserMovies');
         setDataToLocalStorage('foundAmongUserMovies', [...foundAmongUserMovies, savedMovie]);
-        setCardStateSwitch(state => !state);
-      }).catch((err) => {
-        console.log(err);
-    });
+      }).catch((statusCode) => {
+        checkAuthorization(statusCode);
+        console.log(`${SERVER_ERROR} ${statusCode}`);
+      }).finally(() => {
+        setIsLoading(false); 
+      });
   };
   
   const handleDeleteMovie = (id) => {
+    setIsLoading(true);
+      
     const userMovies = getDataFromLocalStorage('userMovies');
     const foundAmongUserMovies = getDataFromLocalStorage('foundAmongUserMovies');
     const movie = userMovies.find(m => m.movieId === id);
-
+    
     deleteMovie(movie._id)
       .then(() => {
         setDataToLocalStorage('userMovies', userMovies.filter((c) => c._id !== movie._id));
         setDataToLocalStorage('foundAmongUserMovies', foundAmongUserMovies.filter((c) => c.movieId !== id));
-        setCardStateSwitch(state => !state);
-      }).catch((err) => {
-        console.log(err);
+      }).catch((statusCode) => {
+        checkAuthorization(statusCode)
+        console.log(`${SERVER_ERROR} ${statusCode}`);
+    }).finally(() => {
+        setIsLoading(false); 
+    });
+  };
+
+  const handleExitClick = () => {
+    logout()
+      .then(() => {
+        clearData();
+      }).catch((statusCode) => {
+        console.log(`${SERVER_ERROR} ${statusCode}`);
     });
   };
   
-  
   const resetUserMoviesRequestData = () => {
-    setUserMoviesRequestData({
-      searchQueryForUserMovies: '',
-      isShortMoviesForUserMovies: false
-    });
+    setUserMoviesRequestData({});
+  };
+
+  const clearData = () => {
+    localStorage.clear();
+    setIsLogged(false);
+    setCurrentUser({});
+    setAllMoviesRequestData({});
+    setUserMoviesRequestData({});
+
+  };
+
+  const checkAuthorization = (statusCode) => {
+    if (statusCode === 401) {
+      clearData();
+      history('/')
+    };
   };
   
   return (
@@ -281,6 +302,7 @@ function App() {
               onHandleUpdateProfileInfo={handleUpdateProfileInfo}
               serverMessage={serverMessage}
               setServerMessage={setServerMessage}
+              isLoading={isLoading}
             />
           } />
           <Route path='*' element={<ErrorPage/>} />

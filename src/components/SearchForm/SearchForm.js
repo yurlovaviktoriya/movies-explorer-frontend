@@ -6,13 +6,13 @@ import { useState } from 'react';
 
 import { getDataFromLocalStorage, setDataToLocalStorage } from '../../utils/moveLocalStorageDataFunctions';
 
-function SearchForm({ requestText, isShortMovies, setMoviesRequestData, onHandleSubmit }) {
+function SearchForm({ isLoading, requestText, isShortMovies, setMoviesRequestData, onHandleSubmit }) {
 
   const { localStorageName, localStorageValue } = requestText;
 
   const [isValid, setIsValid] = useState('');
 
-  const btnClasses = !isValid ? 'btn search__film-btn' : "btn search__film-btn search__film-btn_disabled";
+  const btnClasses = !isValid || !isLoading ? 'btn search__film-btn' : "btn search__film-btn search__film-btn_disabled";
 
   const changeInputValue = (evt) => {
     if (!evt.target.closest("form").checkValidity()) {
@@ -37,7 +37,7 @@ function SearchForm({ requestText, isShortMovies, setMoviesRequestData, onHandle
         <input className="search__input" type="text" name={localStorageName} placeholder="Фильм"
           required onChange={changeInputValue} value={localStorageValue || ''}></input>
         <span className="search__error-text">{isValid}</span>
-        <button className={btnClasses} type="submit" disabled={!localStorageValue}>Поиск</button>
+        <button className={btnClasses} type="submit" disabled={!localStorageValue || isLoading}>Поиск</button>
         <FilterCheckbox
           isChecked={isShortMovies}
           setMoviesRequestData={setMoviesRequestData}

@@ -34,14 +34,17 @@ function Movies({ isDarkTheme, openBurgerMenu, isLoading, onHandleSearchApiMovie
   const moviesToSearch = getDataFromLocalStorage('apiMovies') || [];
   const moviesToRender = getDataFromLocalStorage('foundAmongAllMovies') || [];
 
-  const isDesktopAtMountingTime = document.body.clientWidth > 380;
+  let isDesktopAtMountingTime = document.body.clientWidth > 380;
+  const timeOut = useRef(null);
 
   const monitorScreenWidth = () => {
     const screenWidth = document.body.clientWidth;
     const isCurrentDesktop = screenWidth > 380;
     if (isDesktopAtMountingTime !== isCurrentDesktop) {
-      const params = {isCurrentDesktop, isCurrentMobail: !isCurrentDesktop}
-      setTimeout(() => {resetSettingsForCalculation(params)}, 300);
+      isDesktopAtMountingTime = !isDesktopAtMountingTime;
+      clearTimeout(timeOut.current);
+      const params = { isCurrentDesktop, isCurrentMobail: !isCurrentDesktop }
+      timeOut.current = setTimeout(() => {resetSettingsForCalculation(params)}, 300);
     };
   };
 
@@ -84,6 +87,7 @@ function Movies({ isDarkTheme, openBurgerMenu, isLoading, onHandleSearchApiMovie
       />
       <main>
         <SearchForm
+          isLoading={isLoading}
           requestText={{
             localStorageName: 'searchQueryForAllMovies',
             localStorageValue: searchQueryForAllMovies

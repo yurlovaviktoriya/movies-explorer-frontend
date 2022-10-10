@@ -25,6 +25,10 @@
   font-weight: 400;
   font-size: 13px;
   line-height: 16px;
+  color: #2be080;
+}
+
+.profile__edit-btn_disabled {
   color: #000;
 }
 

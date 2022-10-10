@@ -3,7 +3,7 @@ import { useState } from 'react';
 import './AuthInput.css';
 
 function AuthInput({ inputValues, errorsMessage, labelText, inputType, inputName,
-                     minLength, maxLength, onChangeInputText }) {
+                     minLength, maxLength, autocomplete, onChangeInputText }) {
 
   const message = errorsMessage[inputName];
   const inputValue = inputValues[inputName];
@@ -15,7 +15,7 @@ function AuthInput({ inputValues, errorsMessage, labelText, inputType, inputName
       {labelText}
       <input className={inputClasses} type={inputType} name={inputName}
          minLength={minLength && minLength} maxLength={maxLength && maxLength}
-         value={inputValue || ''} required onChange={onChangeInputText}></input>
+         value={inputValue || ''} required autoComplete={autocomplete} onChange={onChangeInputText}></input>
       <span className="auth__input-error-text">{message}</span>
     </label>
   );

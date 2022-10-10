@@ -16,7 +16,7 @@ export const useHeightCalculatorForMoviesList = () => {
 
   
   const resetSettingsForCalculation = ({ isCurrentDesktop, isCurrentMobail }) => {
-      const { cardHeigth,  cardsNumberInSection, padding } = settings.current
+      const { cardHeigth,  cardsNumberInSection, padding } = settings.current;
       const currentHeight = document.querySelector('.card-list').clientHeight - padding;
       let  numberOfRenderedCards = Math.ceil(currentHeight / cardHeigth);
       if (numberOfRenderedCards === cardsNumberInSection) {

@@ -16,7 +16,7 @@ function ProfileInput({ inputValues, errorMessages, labelText, inputType, inputN
         {labelText}
         <input className={inputClasses} type={inputType} name={inputName}
            minLength={minLength && minLength} maxLength={maxLength && maxLength}
-           value={inputValue || userInfo} required onChange={onChangeInputText}></input>
+           value={inputValue} required onChange={onChangeInputText}></input>
       </label>
       <span className="profile__input-error-text">{message}</span>
     </>

@@ -6,14 +6,14 @@ import './AuthForm.css';
 
 import { getDataFromLocalStorage, setDataToLocalStorage } from '../../utils/moveLocalStorageDataFunctions';
 
-function AuthForm({ isValidForm, inputValues, errorsMessage, submitBtnText, submitBtnClasses, inputs,
+function AuthForm({ isLoading, isValidForm, inputValues, errorsMessage, submitBtnText, submitBtnClasses, inputs,
                     onChangeInputText, onSubmit, serverMessage, setServerMessage }) {
 
   const btnSubmit = useRef(); 
-  
+
   const formBtnClasses = isValidForm ? submitBtnClasses : `${submitBtnClasses} auth__btn_disabled`;
   
-  const message = getDataFromLocalStorage('serverMessage');
+  const message = JSON.parse(localStorage.getItem('serverMessage'));
   
   useEffect(()=> {
     setDataToLocalStorage('serverMessage', serverMessage);
@@ -30,13 +30,14 @@ function AuthForm({ isValidForm, inputValues, errorsMessage, submitBtnText, subm
             inputName={input.inputName}
             minLength={input.minLength}
             maxLength={input.maxLength}
+            autocomplete={input.autocomplete}
             onChangeInputText={onChangeInputText}
             errorsMessage={errorsMessage}
             inputValues={inputValues}
           />
         ))}
           <p className="auth__server-message">{message}</p>
-        <button ref={btnSubmit} className={formBtnClasses} type="submit" disabled={!isValidForm}>{submitBtnText}</button>
+        <button ref={btnSubmit} className={formBtnClasses} type="submit" disabled={!isValidForm || isLoading}>{submitBtnText}</button>
       </form>
     )
 };
