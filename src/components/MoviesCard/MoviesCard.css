@@ -11,6 +11,11 @@
 
 .card__info {
   margin: 20px 0 20px 22px;
+  flex-basis: 100px;
+  flex-grow: .8;
+  flex-shrink: 2;
+
+  overflow-x: hidden;
 }
 
 .card__title {
@@ -20,6 +25,10 @@
   font-size: 18px;
   line-height: 22px;
   color: #000;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .card__duration {
@@ -55,6 +64,7 @@
 }
 
 .card__img {
+  flex-basis: 220px;
   width: 220px;
   height: 122px;
   margin: 6px 6px 6px 0;
@@ -71,6 +81,7 @@
   .card__img {
     width: 300px;
     height: 168px;
+    flex-basis: 168px;
     margin: 0;
     order: -1;
     align-self: center;
@@ -80,6 +91,11 @@
     width: calc(300px - 12px);
     margin: 0 auto;
     padding: 14px 0 14px 12px;
+
+    flex-basis: auto;
+    flex-grow: 1;
+    flex-shrink: 1;
+
     display: flex;
     flex-wrap: wrap;
     align-items: center;

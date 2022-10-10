@@ -6,12 +6,11 @@ import AboutMe from '../AboutMe/AboutMe';
 import Footer from '../Footer/Footer';
 import './Main.css';
 
-function Main({ isDarkTheme, isLogged, openBurgerMenu }) {
+function Main({ isDarkTheme, openBurgerMenu }) {
   return (
     <>
       <Header
         isDarkTheme={isDarkTheme}
-        isLogged={isLogged}
         openBurgerMenu={openBurgerMenu}
       />
       <main>

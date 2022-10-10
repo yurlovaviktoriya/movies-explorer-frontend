@@ -17,16 +17,17 @@ function BurgerMenu({ burgerMenuClasses, closeBurgerMenu }) {
               : "link link_color_black")} onClick={closeBurgerMenu}>Главная</NavLink>
             </li>
             <li className="burger-menu__list-item burger-menu__list-item_active">
-              <NavLink to="/movies" className={({isActive}) => (isActive ? "link link_color_black burger-menu__link_active"
+              <NavLink to="/movies" className={({isActive}) => (isActive ? "link link_color_black link_active"
               : "link link_color_black")} onClick={closeBurgerMenu}>Фильмы</NavLink>
             </li>
             <li className="burger-menu__list-item">
-              <NavLink to="/saved-movies" className={({isActive}) => (isActive ? "link link_color_black burger-menu__link_active"
+              <NavLink to="/saved-movies" className={({isActive}) => (isActive ? "link link_color_black link_active"
               : "link link_color_black")} onClick={closeBurgerMenu}>Сохранённые фильмы</NavLink>
             </li>
           </ul>
           <Account
             isHeader={false}
+            closeBurgerMenu={closeBurgerMenu}
           />
         </nav>
       </div>

@@ -1,9 +1,12 @@
 import './More.css';
 
-function More() {
+function More({ moreBtn,  areThereAnyMovies, onHandleClick }) {
+    
+  const sectionClasses = areThereAnyMovies ? 'more more_visible' : 'more';
+  
   return (
-    <section className="more">
-      <button className="btn more__btn" type="button">Ещё</button>
+    <section className={sectionClasses}>
+      <button ref={moreBtn} className="btn more__btn" type="button" onClick={onHandleClick}>Ещё</button>
     </section>
   );
 };

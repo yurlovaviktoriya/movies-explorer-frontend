@@ -1,0 +1,59 @@
+.profile__form {
+  width: 410px;
+  margin: 106px auto 0 auto;
+
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 13px;
+  color: #000;
+}
+
+.profile__server-message {
+  width: 100%;
+  height: 204px;
+  margin: 0;
+  padding-top: 10px;
+
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: -0.04em;
+  color: #000;
+}
+
+.profile__edit-btn {
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
+  color: #2be080;
+}
+
+.profile__edit-btn_disabled {
+  color: #000;
+}
+
+@media screen and (max-width: 768px) {
+  .profile__form {
+    margin-top: 80px;
+  }
+
+  .profile__server-message {
+    height: 192px;
+  }
+}
+
+@media screen and (max-width: 680px) {
+  .profile__form {
+    width: 260px;
+    margin-top: 64px;
+  }
+
+  .profile__server-message {
+    height: 360px;
+  }
+
+  .profile__edit-btn {
+    font-size: 12px;
+    line-height: 15px;
+  }
+}

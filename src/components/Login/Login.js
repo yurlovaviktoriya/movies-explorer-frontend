@@ -1,8 +1,26 @@
+import { useState, useEffect } from 'react';
+
 import AuthPage from '../AuthPage/AuthPage';
 
 import './Login.css';
 
-function Login() {
+import { useFormWithValidation } from '../../utils/useFormWithValidation';
+
+function Login({ isLoading, onLogin, serverMessage, setServerMessage }) {
+
+  const { values, handleChange, errors, isValid } = useFormWithValidation();
+  
+  const submitBtnText = isLoading ? 'Вход...' : 'Войти';
+
+  const handleSubmit = (evt, btnSubmit) => {
+    
+    evt.preventDefault();
+
+    onLogin({
+      email: values.loginEmail,
+      password: values.loginPassword
+    });
+  };
 
   return (
     <AuthPage
@@ -12,7 +30,7 @@ function Login() {
       link={'/signup'}
       formData={
         {
-          submitBtnText: 'Войти',
+          submitBtnText,
           submitBtnClasses: 'btn auth__btn auth__btn_type_login'
         }
       }
@@ -22,16 +40,26 @@ function Login() {
             id: 1,
             labelText: 'E-mail',
             inputType: 'email',
-            isInputError: false
+            inputName: 'loginEmail',
+            autocomplete: 'on'
           },
           {
             id: 2,
             labelText: 'Пароль',
-            inputType: 'current-password',
-            isInputError: false
+            inputType: 'password',
+            inputName: 'loginPassword',
+            autocomplete: 'current-password'
           },
         ]
       }
+      inputValues={values}
+      errorsMessage={errors}
+      isValidForm={isValid}
+      onChangeInputText={handleChange}
+      onSubmit={handleSubmit}
+      serverMessage={serverMessage}
+      setServerMessage={setServerMessage}
+      isLoading={isLoading}
     />
   )
 };

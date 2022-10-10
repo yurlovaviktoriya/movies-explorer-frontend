@@ -3,6 +3,18 @@
   margin-top: 40px;
 }
 
+.auth__server-message {
+  width: 100%;
+  height: 69px;
+  margin: 0;
+
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: -0.04em;
+  color: #000;
+}
+
 .auth__btn {
   width: 396px;
   height: 45px;
@@ -16,12 +28,13 @@
   color: #fff;
 }
 
-.auth__btn_type_register {
-  margin-top: 69px;
+.auth__btn_disabled {
+  color: #000;
+  background: #f9f9f9;
 }
 
 .auth__btn_type_login {
-  margin-top: 179px;
+  margin-top: 110px;
 }
 
 @media screen and (max-width: 580px) {
@@ -29,18 +42,14 @@
     margin-top: 80px;
   }
 
+  .auth__server-message {
+    height: 157px;
+  }
+
   .auth__btn {
     width: 260px;
 
     font-size: 12px;
     line-height: 15px;
-  }
-
-  .register__btn_type_register {
-    margin-top: 157px;
-  }
-
-  .register__btn_type_login {
-    margin-top: 267px;
   }
 }
