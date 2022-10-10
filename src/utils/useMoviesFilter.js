@@ -8,6 +8,7 @@ const useMoviesFilter = (queryParamLocalStorageKeys, foundMoviesLocalStorageKey)
 
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [notFoundMovies, setNotFoundMovies] = useState('');
+  const [hasFiltered, setHasFiltered] = useState(false);
 
   const filterMoviesBySearchQuery = (movies, searchQuery) => {
     return movies.filter((movie) => {
@@ -61,10 +62,11 @@ const useMoviesFilter = (queryParamLocalStorageKeys, foundMoviesLocalStorageKey)
     };
 
     setFilteredMovies(result);
+    setHasFiltered(true);
     return result;
   };
 
-  return { filteredMovies, notFoundMovies, enableFiltration };
+  return { hasFiltered, setHasFiltered, filteredMovies, notFoundMovies, setNotFoundMovies, enableFiltration };
 };
 
 export default useMoviesFilter;

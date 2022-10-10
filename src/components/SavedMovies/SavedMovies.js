@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import Header from '../Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
 import Preloader from '../Preloader/Preloader';
@@ -8,21 +10,32 @@ import Footer from '../Footer/Footer';
 import './SavedMovies.css';
 
 import useMoviesFilter from '../../utils/useMoviesFilter';
-import { getDataFromLocalStorage } from '../../utils/moveLocalStorageDataFunctions';
+import { getDataFromLocalStorage, setDataToLocalStorage } from '../../utils/moveLocalStorageDataFunctions';
 
 function SavedMovies({ isLoading, setIsLoading, isDarkTheme, openBurgerMenu, userMoviesRequestData,
-              setUserMoviesRequestData, onHandleDeleteMovie, searchResponse, setSearchResponse }) {
+              setUserMoviesRequestData, onHandleDeleteMovie, searchResponse, resetUserMoviesRequestData }) {
 
-  const moviesToSearch = getDataFromLocalStorage('userMovies') || [];
-  const moviesToRender = getDataFromLocalStorage('foundAmongUserMovies') || [];
-
-  const { searchQueryForUserMovies, isShortMoviesForUserMovies } = userMoviesRequestData;
-  
-  const { enableFiltration, notFoundMovies } = useMoviesFilter({
+  const { hasFiltered, setHasFiltered, notFoundMovies, setNotFoundMovies, enableFiltration } = useMoviesFilter({
         searchQueryKey: 'searchQueryForUserMovies',
         isShortMoviesKey: 'isShortMoviesForUserMovies'
       }, 'foundAmongUserMovies');
-    
+
+  const moviesToSearch = getDataFromLocalStorage('userMovies') || [];
+  const foundMovies = getDataFromLocalStorage('foundAmongUserMovies') || [];
+
+  const moviesToRender = hasFiltered ? foundMovies : moviesToSearch;
+
+  const { searchQueryForUserMovies, isShortMoviesForUserMovies } = userMoviesRequestData;
+
+  useEffect(() => {
+    resetUserMoviesRequestData();
+    setDataToLocalStorage('searchQueryForUserMovies', '');
+    setDataToLocalStorage('isShortMoviesForUserMovies', false);
+    setNotFoundMovies('');
+    setHasFiltered(false);
+  }, []);
+
+
   const enableFiltrationAmongUserMovies = () => {
     enableFiltration(moviesToSearch);
   };

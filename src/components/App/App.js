@@ -209,6 +209,14 @@ function App() {
     });
   };
   
+  
+  const resetUserMoviesRequestData = () => {
+    setUserMoviesRequestData({
+      searchQueryForUserMovies: '',
+      isShortMoviesForUserMovies: false
+    });
+  };
+  
   return (
     <CurrentUserContext.Provider value={{currentUser, isLogged}}>
       <div className="root">
@@ -262,6 +270,7 @@ function App() {
               setUserMoviesRequestData={setUserMoviesRequestData}
               onHandleDeleteMovie={handleDeleteMovie}
               serverMessage={serverMessage}
+              resetUserMoviesRequestData={resetUserMoviesRequestData}
             />
           } />
           <Route path='/profile' element={
