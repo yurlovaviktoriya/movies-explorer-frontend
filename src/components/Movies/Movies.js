@@ -14,7 +14,7 @@ import useMoviesFilter from '../../utils/useMoviesFilter';
 import { useHeightCalculatorForMoviesList } from '../../utils/useHeightCalculatorForMoviesList'
 import { getDataFromLocalStorage } from '../../utils/moveLocalStorageDataFunctions';
 
-function Movies({ isDarkTheme, openBurgerMenu, isLoading, onHandleSearchApiMovies,
+function Movies({ isDarkTheme, openBurgerMenu, isLoading, isDisableSearchBtn, onHandleSearchApiMovies,
                   onHandleSaveMovie, onHandleDeleteMovie, allMoviesRequestData,
                   setAllMoviesRequestData, searchResponse, setSearchResponse}) {
 
@@ -87,7 +87,7 @@ function Movies({ isDarkTheme, openBurgerMenu, isLoading, onHandleSearchApiMovie
       />
       <main>
         <SearchForm
-          isLoading={isLoading}
+          isDisableSearchBtn={isDisableSearchBtn}
           requestText={{
             localStorageName: 'searchQueryForAllMovies',
             localStorageValue: searchQueryForAllMovies

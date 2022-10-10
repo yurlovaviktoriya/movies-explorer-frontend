@@ -43,6 +43,7 @@ function App() {
 
   const [burgerMenuClasses, setBurgerMenuClasses] = useState('burger-menu');
   const [isLoading, setIsLoading] = useState(false);
+  const [isDisableSearchBtn, setIsDisableSearchBtn] = useState(false);
 
 
   useEffect(() => {
@@ -60,7 +61,7 @@ function App() {
           setDataToLocalStorage('currentUser', {
             name: currentUserInfo.name,
             email: currentUserInfo.email
-          })
+          });
         }).catch((statusCode) => {
           checkAuthorization(statusCode);
         });
@@ -84,6 +85,10 @@ function App() {
         setDataToLocalStorage('isLogged', 'true');
         setIsLogged(true);
         setCurrentUser({
+          name: currentUserInfo.name,
+          email: currentUserInfo.email
+        });
+        setDataToLocalStorage('currentUser', {
           name: currentUserInfo.name,
           email: currentUserInfo.email
         });
@@ -128,6 +133,10 @@ function App() {
           name: currentUserInfo.name,
           email: currentUserInfo.email
         });
+        setDataToLocalStorage('currentUser', {
+           name: currentUserInfo.name,
+           email: currentUserInfo.email
+        });
         getInitialMovies();
         history('/movies');
       }).catch((statusCode) => {
@@ -143,6 +152,10 @@ function App() {
     editProfileInfo({ name, email })
       .then((res) => {
         setCurrentUser({
+          name: res.name,
+          email: res.email
+        });
+        setDataToLocalStorage('currentUser', {
           name: res.name,
           email: res.email
         });
@@ -172,7 +185,7 @@ function App() {
   };
 
   const handleSaveMovie = (id) => {
-    setIsLoading(true);
+    setIsDisableSearchBtn(true);
     
     const movie = getDataFromLocalStorage('apiMovies').find(m => m.id === id);
 
@@ -186,12 +199,12 @@ function App() {
         checkAuthorization(statusCode);
         console.log(`${SERVER_ERROR} ${statusCode}`);
       }).finally(() => {
-        setIsLoading(false); 
+        setIsDisableSearchBtn(false);
       });
   };
   
   const handleDeleteMovie = (id) => {
-    setIsLoading(true);
+    setIsDisableSearchBtn(true);
       
     const userMovies = getDataFromLocalStorage('userMovies');
     const foundAmongUserMovies = getDataFromLocalStorage('foundAmongUserMovies');
@@ -205,7 +218,7 @@ function App() {
         checkAuthorization(statusCode)
         console.log(`${SERVER_ERROR} ${statusCode}`);
     }).finally(() => {
-        setIsLoading(false); 
+        setIsDisableSearchBtn(false);
     });
   };
 
@@ -270,6 +283,7 @@ function App() {
               isDarkTheme={false}
               openBurgerMenu={openBurgerMenu}
               isLoading={isLoading}
+              isDisableSearchBtn={isDisableSearchBtn}
               onHandleSearchApiMovies={handleSearchApiMovies}
               onHandleSaveMovie={handleSaveMovie}
               onHandleDeleteMovie={handleDeleteMovie}
@@ -286,6 +300,7 @@ function App() {
               isDarkTheme={false}
               openBurgerMenu={openBurgerMenu}
               isLoading={isLoading}
+              isDisableSearchBtn={isDisableSearchBtn}
               setIsLoading={setIsLoading}
               userMoviesRequestData={userMoviesRequestData}
               setUserMoviesRequestData={setUserMoviesRequestData}

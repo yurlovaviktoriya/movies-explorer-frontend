@@ -12,7 +12,7 @@ import './SavedMovies.css';
 import useMoviesFilter from '../../utils/useMoviesFilter';
 import { getDataFromLocalStorage, setDataToLocalStorage } from '../../utils/moveLocalStorageDataFunctions';
 
-function SavedMovies({ isLoading, setIsLoading, isDarkTheme, openBurgerMenu, userMoviesRequestData,
+function SavedMovies({ isLoading, isDisableSearchBtn, setIsLoading, isDarkTheme, openBurgerMenu, userMoviesRequestData,
               setUserMoviesRequestData, onHandleDeleteMovie, searchResponse, resetUserMoviesRequestData }) {
 
   const { hasFiltered, setHasFiltered, notFoundMovies, setNotFoundMovies, enableFiltration } = useMoviesFilter({
@@ -54,7 +54,7 @@ function SavedMovies({ isLoading, setIsLoading, isDarkTheme, openBurgerMenu, use
       />
       <main>
         <SearchForm
-          isLoading={isLoading}
+          isDisableSearchBtn={isDisableSearchBtn}
           onHandleSubmit={handleSubmit}
           requestText={{
             localStorageName: 'searchQueryForUserMovies',
